@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Facebook Layout</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            background-color: #f0f2f5;
+        }
+
+        .navbar {
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            padding: 8px 16px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .navbar-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .facebook-logo {
+            width: 40px;
+            height: 40px;
+            margin-right: 8px;
+        }
+
+        .search-bar {
+            background-color: #f0f2f5;
+            border-radius: 20px;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            width: 200px;
+        }
+
+        .search-icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 4px;
+            opacity: 0.6;
+        }
+
+        .search-input {
+            border: none;
+            background: none;
+            outline: none;
+            flex: 1;
+            font-size: 14px;
+            color: #65676b;
+        }
+
+        .navbar-middle {
+            display: flex;
+            flex-grow: 1;
+            justify-content: center;
+        }
+
+        .navbar-middle a {
+            padding: 0 20px;
+            color: #65676b;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .navbar-middle a.active {
+            color: #1877f2;
+        }
+
+        .navbar-middle a.active::after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 3px;
+            background-color: #1877f2;
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+        }
+
+        .navbar-right a {
+            margin-left: 12px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #000;
+            text-decoration: none;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .navbar-right a:hover {
+            background-color: #e4e6eb;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: red;
+            color: white;
+            font-size: 10px;
+            padding: 2px 5px;
+            border-radius: 10px;
+        }
+
+        .fa-user, .fa-heart, .fa-store, .fa-gamepad, .fa-bars, .fa-message, .fa-bell, .fa-circle-user, .fa-home {
+            font-size: 20px;
+            color: #65676b;
+        }
+
+        /* Active State for Font Awesome Icons */
+        .navbar-middle a.active .fa-user,
+        .navbar-middle a.active .fa-heart,
+        .navbar-middle a.active .fa-store,
+        .navbar-middle a.active .fa-gamepad,
+        .navbar-middle a.active .fa-home {
+            color: #1877f2;
+        }
+
+        .icon {
+            width: 24px;
+            height: 24px;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .main-container {
+            display: flex;
+            height: calc(100vh - 60px); /* Subtract navbar height */
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #fff;
+            padding: 16px;
+            display: none; /* Hide sidebar initially */
+        }
+
+        .sidebar.active {
+            display: block; /* Show sidebar when active */
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            color: #000;
+        }
+
+        .sidebar li:hover {
+            background-color: #e4e6eb;
+        }
+
+        .sidebar li i {
+            margin-right: 8px;
+            font-size: 18px;
+            width: 24px;
+            text-align: center;
+        }
+
+        .content-area {
+            flex: 1;
+            padding: 16px;
+        }
+
+        .content {
+            display: none;
+        }
+
+        .content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-left">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="Facebook Logo" class="facebook-logo">
+            <div class="search-bar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" class="search-input" placeholder="Search Facebook">
+            </div>
+        </div>
+
+        <div class="navbar-middle">
+            <a href="#" data-target="home" class="navbar-link">
+                <i class="fa-solid fa-home"></i>
+            </a>
+            <a href="#" data-target="user" class="navbar-link">
+                <i class="fa-solid fa-user"></i>
+            </a>
+            <a href="#" data-target="heart" class="navbar-link">
+                <i class="fa-solid fa-heart"></i>
+            </a>
+            <a href="#" data-target="store" class="navbar-link">
+                <i class="fa-solid fa-store"></i>
+            </a>
+            <a href="#" data-target="gamepad" class="navbar-link">
+                <i class="fa-solid fa-gamepad"></i>
+            </a>
+        </div>
+
+        <div class="navbar-right">
+            <a href="#" data-target="bars" class="navbar-link">
+                <i class="fa-solid fa-bars"></i>
+            </a>
+            <a href="#" data-target="message" class="navbar-link">
+                <i class="fa-solid fa-message"></i>
+                <span class="notification-badge">3</span>
+            </a>
+            <a href="#" data-target="bell" class="navbar-link">
+                <i class="fa-solid fa-bell"></i>
+                <span class="notification-badge">12</span>
+            </a>
+            <a href="#" data-target="profile_right" class="navbar-link">
+                <i class="fa-solid fa-circle-user"></i>
+            </a>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <div class="sidebar" id="sidebar">
+            <ul>
+                <li data-target="profile"><i class="fas fa-user"></i> profile</li>
+                <li data-target="friends"><i class="fas fa-user-friends"></i> Friends</li>
+                <li data-target="memories"><i class="fas fa-clock"></i> Memories</li>
+                <li data-target="saved"><i class="fas fa-bookmark"></i> Saved</li>
+                <li data-target="groups"><i class="fas fa-users"></i> Groups</li>
+                <li data-target="video"><i class="fas fa-video"></i> Video</li>
+                <li data-target="marketplace"><i class="fas fa-store"></i> Marketplace</li>
+                <li data-target="feeds"><i class="fas fa-rss"></i> Feeds</li>
+                <li data-target="events"><i class="fas fa-calendar"></i> Events</li>
+                <li data-target="ads"><i class="fas fa-chart-bar"></i> Ads Manager</li>
+                <li data-target="fundraisers"><i class="fas fa-heart"></i> Fundraisers</li>
+                <li data-target="more"><i class="fas fa-ellipsis-h"></i> See more</li>
+            </ul>
+        </div>
+
+        <div class="content-area">
+            <div id="profile" class="content">
+                <h2>Profile</h2>
+                <p>Welcome to your profile.</p>
+            </div>
+
+            <div id="friends" class="content">
+                <h2>Friends</h2>
+                <p>See what your friends are up to.</p>
+            </div>
+
+            <div id="memories" class="content">
+                <h2>Memories</h2>
+                <p>Look back on old memories.</p>
+            </div>
+
+            <div id="saved" class="content">
+                <h2>Saved</h2>
+                <p>Access saved items.</p>
+            </div>
+
+            <div id="groups" class="content">
+                <h2>Groups</h2>
+                <p>Explore your groups.</p>
+            </div>
+
+            <div id="video" class="content">
+                <h2>Video</h2>
+                <p>Watch videos on Facebook.</p>
+            </div>
+
+            <div id="marketplace" class="content">
+                <h2>Marketplace</h2>
+                <p>Buy and sell items.</p>
+            </div>
+
+            <div id="feeds" class="content">
+                <h2>Feeds</h2>
+                <p>Browse your news feed.</p>
+            </div>
+
+            <div id="events" class="content">
+                <h2>Events</h2>
+                <p>Discover upcoming events.</p>
+            </div>
+
+            <div id="ads" class="content">
+                <h2>Ads Manager</h2>
+                <p>Manage your advertising campaigns.</p>
+            </div>
+
+            <div id="fundraisers" class="content">
+                <h2>Fundraisers</h2>
+                <p>Support important causes.</p>
+            </div>
+
+            <div id="more" class="content">
+                <h2>See More</h2>
+                <p>Explore more Facebook features.</p>
+            </div>
+
+            <div id="home" class="content">
+                <h2>Home</h2>
+                <p>Welcome to Facebook!</p>
+            </div>
+
+            <div id="user" class="content">
+                <h2>User</h2>
+                <p>Your user information.</p>
+            </div>
+
+             <div id="heart" class="content">
+                <h2>Heart</h2>
+                <p>Heart stuff</p>
+            </div>
+
+             <div id="store" class="content">
+                <h2>Store</h2>
+                <p>Store stuff</p>
+            </div>
+
+              <div id="gamepad" class="content">
+                <h2>gamepad</h2>
+                <p>games</p>
+            </div>
+
+               <div id="bars" class="content">
+                <h2>bars</h2>
+                <p>bars</p>
+            </div>
+
+             <div id="message" class="content">
+                <h2>message</h2>
+                <p>message</p>
+            </div>
+            <div id="bell" class="content">
+                <h2>bell</h2>
+                <p>notifications</p>
+            </div>
+               <div id="profile_right" class="content">
+                <h2>profile_right</h2>
+                <p>profile right</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+     
+
+        const sidebar = document.getElementById('sidebar');
+        const sidebarItems = document.querySelectorAll('.sidebar li');
+        const contentAreas = document.querySelectorAll('.content');
+        const navbarMiddleItems = document.querySelectorAll('.navbar-middle a');
+        const navbarRightItems = document.querySelectorAll('.navbar-right a');
+
+        function updateContent(target) {
+            // Hide all content areas
+            contentAreas.forEach(area => area.classList.remove('active'));
+
+            // Show the selected content area
+            const targetArea = document.getElementById(target);
+            if (targetArea) {
+                targetArea.classList.add('active');
+            }
+        }
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+        }
+
+        // Sidebar navigation
+        sidebarItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const target = this.dataset.target;
+                updateContent(target);
+
+                // Remove active from all sidebar items, add to clicked item
+                sidebarItems.forEach(item => item.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Navbar middle navigation
+        navbarMiddleItems.forEach(item => {
+            item.addEventListener('click', function(event) {
+                event.preventDefault();
+                const target = this.dataset.target;
+                updateContent(target);
+
+                // Remove active from all navbar middle items
+                navbarMiddleItems.forEach(item => item.classList.remove('active'));
+                navbarRightItems.forEach(item => item.classList.remove('active'));
+
+                // Show sidebar
+                sidebar.classList.add('active');
+
+                // Remove active from all sidebar items
+                 sidebarItems.forEach(item => item.classList.remove('active'));
+            });
+        });
+
+        // Navbar right navigation
+        navbarRightItems.forEach(item => {
+            item.addEventListener('click', function(event) {
+                event.preventDefault();
+                const target = this.dataset.target;
+                updateContent(target);
+
+                // Remove active from all navbar right items, add to clicked item
+                navbarRightItems.forEach(item => item.classList.remove('active'));
+                 navbarMiddleItems.forEach(item => item.classList.remove('active'));
+
+                // Show sidebar
+                sidebar.classList.add('active');
+
+                // Remove active from all sidebar items
+                sidebarItems.forEach(item => item.classList.remove('active'));
+            });
+        });a
+
+
+    </script>
+
+</body>
+</html>

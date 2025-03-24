@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Facebook</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            width: 980px;
+            margin-top: -80px;
+        }
+
+        .left-section h1 {
+            color: #166fe5;
+            font-size: 80px;
+        }
+
+        .left-section {
+            width: 580px;
+            padding-right: 32px;
+        }
+
+        .tagline {
+            font-size: 28px;
+            line-height: 36px;
+            color: #1c1e21;
+        }
+
+        .login-form {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 16px;
+            width: 396px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-input {
+            width: calc(100% - 24px);
+            padding: 12px;
+            margin-bottom: 16px;
+            border: 1px solid #dddfe2;
+            border-radius: 6px;
+            font-size: 17px;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        .form-input:focus {
+            border-color: #1877f2;
+            box-shadow: 0 0 5px rgba(24, 119, 242, 0.2);
+        }
+
+        .login-button {
+            background-color: #1877f2;
+            color: #fff;
+            font-size: 20px;
+            font-weight: bold;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 16px;
+            transition: background-color 0.2s ease;
+        }
+
+        .login-button:hover {
+            background-color: #166fe5;
+        }
+
+        .forgotten-password {
+            text-align: center;
+            color: #1877f2;
+            font-size: 14px;
+            display: block;
+            margin-bottom: 16px;
+            text-decoration: none;
+        }
+
+        hr {
+            border: none;
+            border-bottom: 1px solid #dadde1;
+            margin: 16px 0;
+        }
+
+        .create-account-button {
+            background-color: #42b72a;
+            color: #fff;
+            font-size: 17px;
+            font-weight: bold;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            max-width: 360px;
+            text-align: center;
+            transition: background-color 0.2s ease;
+            text-decoration: none;
+        }
+
+        .create-account-button:hover {
+            background-color: #36a420;
+        }
+
+        .create-page {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #1c1e21;
+        }
+
+        .create-page a {
+            color: #1c1e21;
+            font-weight: bold;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="left-section">
+        <h1>Facebook</h1>
+        <p class="tagline">Facebook helps you connect and share with the people in your life.</p>
+    </div>
+
+    <div class="right-section">
+        <div class="login-form">
+            <input type="text" id="email" class="form-input" placeholder="Email address or phone number">
+            <input type="password" id="password" class="form-input" placeholder="Password">
+            <button class="login-button" onclick="login()">Log In</button>
+            <a href="#" class="forgotten-password">Forgotten password?</a>
+            <hr>
+            <a href="createaccount.html" class="create-account-button">Create new account</a>
+        </div>
+        <p class="create-page"><a href="#">Create a Page</a> for a celebrity, brand or business.</p>
+    </div>
+</div>
+
+<script>
+    function login() {
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value.trim();
+
+        // Basic validation
+        if (!email || !password) {
+            alert("Please enter email and password");
+            return;
+        }
+
+        // Retrieve stored user details
+        const storedUser = JSON.parse(localStorage.getItem("user"));
+
+        if (storedUser && email === storedUser.email && password === storedUser.password) {
+            alert("Login successful");
+            // STORE that login is valid by setting email.
+            localStorage.setItem('email', email); // Store email to indicate login
+            window.location.href = 'dashbord.html';
+        } else {
+            alert("Invalid email or password");
+        }
+    }
+</script>
+
+</body>
+</html>
